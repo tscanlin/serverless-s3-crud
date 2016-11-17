@@ -8,6 +8,7 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - s3:ListBucket
         - dynamodb:DescribeTable
         - dynamodb:Query
         - dynamodb:Scan
@@ -56,19 +57,10 @@ functions:
 
 resources:
   Resources:
-    TodosDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+    HelloBucket:
+      Type: AWS::S3::Bucket
       Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: 'todos'
+        AccessControl: PublicWrite
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: error.html
