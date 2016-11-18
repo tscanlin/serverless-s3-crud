@@ -9,18 +9,33 @@ module.exports = (event, callback) => {
     TableName: 'todos',
   };
 
-  const s3params = {
-    Bucket: 'todos',
-    Key: 'test1',
-    Body: JSON.stringify(params)
+  const s3bucket = {
+    Bucket: 'todos-new',
   }
+  const s3params = {
+    Bucket: 'todos-new',
+    Key: 'test1',
+    Body: 'something else!!!'
+  }
+  const s3GetParams = {
+    Bucket: 'todos-new',
+    Key: 'test1',
+  }
+  console.log('test');
 
-  S3.createBucket(s3params, () => {
-    
-  })
+  // S3.createBucket(s3bucket, (err, d) => {
+  //   console.log(err, d);
+  //   // console.log(d.Body.toString());
+  // })
 
   return S3.upload(s3params, (err, data) => {
     console.log(err, data);
+
+    return S3.getObject(s3GetParams, (err, data) => {
+      console.log('get it!');
+      console.log(err, data);
+      console.log(data.Body.toString());
+    })
   })
 
   // return dynamoDb.scan(params, (error, data) => {

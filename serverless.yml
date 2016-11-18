@@ -57,10 +57,17 @@ functions:
 
 resources:
   Resources:
-    HelloBucket:
+    DefaultBucket:
       Type: AWS::S3::Bucket
       Properties:
-        AccessControl: PublicWrite
+        AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: error.html
+        PropertyDefinitions:
+          -
+            PropertyName: Key
+            PropertyType: S
+          -
+            PropertyName: Body
+            PropertyType: S
