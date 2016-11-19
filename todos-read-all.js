@@ -55,6 +55,7 @@ module.exports = (event, callback) => {
           }
           console.log(error, data.Items);
           console.log(+new Date() - start);
+          callback(error, data)
         });
       })
     })
