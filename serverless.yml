@@ -57,17 +57,27 @@ functions:
 
 resources:
   Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'todos'
     DefaultBucket:
       Type: AWS::S3::Bucket
       Properties:
+        BucketName: my-new-bucket
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: error.html
-        PropertyDefinitions:
-          -
-            PropertyName: Key
-            PropertyType: S
-          -
-            PropertyName: Body
-            PropertyType: S
