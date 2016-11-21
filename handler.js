@@ -1,13 +1,14 @@
 'use strict';
 
-const todosCreate = require('./todos-create.js');
-const todosReadAll = require('./todos-read-all.js');
-const todosReadOne = require('./todos-read-one.js');
-const todosUpdate = require('./todos-update.js');
-const todosDelete = require('./todos-delete.js');
+const Create = require('./handlers/create.js');
+const ReadAll = require('./handlers/read-all.js');
+const ReadOne = require('./handlers/read-one.js');
+const Update = require('./handlers/update.js');
+const Delete = require('./handlers/delete.js');
 
-module.exports.create = (event, context, callback) => {
-  todosCreate(event, (error, result) => {
+exports.create = (event, context, callback) => {
+  console.log(event);
+  Create(event, (error, result) => {
     const response = {
       statusCode: 200,
       headers: {
@@ -20,22 +21,10 @@ module.exports.create = (event, context, callback) => {
   });
 };
 
-module.exports.readAll = (event, context, callback) => {
-  todosReadAll(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result) + JSON.stringify(context) + JSON.stringify(event),
-    };
-
-    context.succeed(response);
-  });
-};
-
-module.exports.readOne = (event, context, callback) => {
-  todosReadOne(event, (error, result) => {
+exports.readAll = (event, context, callback) => {
+  ReadAll(event, (error, result) => {
+    // result.context = context;
+    // result.event = event;
     const response = {
       statusCode: 200,
       headers: {
@@ -48,8 +37,8 @@ module.exports.readOne = (event, context, callback) => {
   });
 };
 
-module.exports.update = (event, context, callback) => {
-  todosUpdate(event, (error, result) => {
+exports.readOne = (event, context, callback) => {
+  ReadOne(event, (error, result) => {
     const response = {
       statusCode: 200,
       headers: {
@@ -62,8 +51,22 @@ module.exports.update = (event, context, callback) => {
   });
 };
 
-module.exports.delete = (event, context, callback) => {
-  todosDelete(event, (error, result) => {
+exports.update = (event, context, callback) => {
+  Update(event, (error, result) => {
+    const response = {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin" : "*"
+      },
+      body: JSON.stringify(result),
+    };
+
+    context.succeed(response);
+  });
+};
+
+exports.delete = (event, context, callback) => {
+  Delete(event, (error, result) => {
     const response = {
       statusCode: 200,
       headers: {

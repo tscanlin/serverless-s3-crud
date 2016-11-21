@@ -3,6 +3,9 @@ service: serverless-crud
 plugins:
   - serverless-offline
 
+custom:
+  objectName: formResponse
+
 provider:
   name: aws
   runtime: nodejs4.3
@@ -12,13 +15,12 @@ provider:
     - Effect: Allow
       Action:
         - s3:ListBucket
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 functions:
@@ -26,60 +28,44 @@ functions:
     handler: handler.create
     events:
       - http:
-          path: todos
+          path: ${self:custom.objectName}
           method: post
           cors: true
   readAll:
     handler: handler.readAll
     events:
       - http:
-          path: todos
+          path: ${self:custom.objectName}
           method: get
           cors: true
   readOne:
     handler: handler.readOne
     events:
       - http:
-          path: todos/{id}
+          path: ${self:custom.objectName}/{id}
           method: get
           cors: true
   update:
     handler: handler.update
     events:
       - http:
-          path: todos/{id}
+          path: ${self:custom.objectName}/{id}
           method: put
           cors: true
   delete:
     handler: handler.delete
     events:
       - http:
-          path: todos/{id}
+          path: ${self:custom.objectName}/{id}
           method: delete
           cors: true
 
 resources:
   Resources:
-    TodosDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: 'todos'
-    DefaultBucket:
+    MyBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: my-new-bucket
+        BucketName: new-bucket
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html

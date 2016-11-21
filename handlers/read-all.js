@@ -3,9 +3,8 @@
 const AWS = require('aws-sdk');
 const S3 = new AWS.S3({
   endpoint: 'http://localhost:4568',
-  s3BucketEndpoint: true,
+  s3ForcePathStyle: true,
   sslEnabled: false,
-  s3ForcePathStyle: true
 });
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1'

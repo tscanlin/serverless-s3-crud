@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <form id="simple-form">
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      var form = document.querySelector('#simple-form');
+      console.log(form);
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(form);
+        fetch('http://localhost:3000/formResponse', {
+            method: 'POST',
+            body: formData
+          })
+          .then(function(res) {
+            console.log(res);
+            return res.json();
+          }).then(function(data) {
+            console.log(data);
+          })
+        console.log(e, formData);
+        console.log(formData.entries());
+      })
+    </script>
+  </body>
+</html>
