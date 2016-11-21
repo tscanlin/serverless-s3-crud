@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "ajv": "^4.9.0",
+    "js-yaml": "^3.7.0",
     "s3rver": "^1.0.2",
     "serverless-offline": "^3.3.2"
   }

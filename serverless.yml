@@ -4,12 +4,13 @@ plugins:
   - serverless-offline
 
 custom:
-  objectName: formResponse
+  folderName: formResponse
 
 provider:
   name: aws
   runtime: nodejs4.3
   region: us-east-1
+  cfLogs: true
   stage: dev
   iamRoleStatements:
     - Effect: Allow
@@ -28,35 +29,35 @@ functions:
     handler: handler.create
     events:
       - http:
-          path: ${self:custom.objectName}
+          path: ${self:custom.folderName}
           method: post
           cors: true
   readAll:
     handler: handler.readAll
     events:
       - http:
-          path: ${self:custom.objectName}
+          path: ${self:custom.folderName}
           method: get
           cors: true
   readOne:
     handler: handler.readOne
     events:
       - http:
-          path: ${self:custom.objectName}/{id}
+          path: ${self:custom.folderName}/{id}
           method: get
           cors: true
   update:
     handler: handler.update
     events:
       - http:
-          path: ${self:custom.objectName}/{id}
+          path: ${self:custom.folderName}/{id}
           method: put
           cors: true
   delete:
     handler: handler.delete
     events:
       - http:
-          path: ${self:custom.objectName}/{id}
+          path: ${self:custom.folderName}/{id}
           method: delete
           cors: true
 

@@ -1,23 +1,20 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const S3 = new AWS.S3({
+  endpoint: 'http://localhost:4568',
+  s3ForcePathStyle: true,
+  sslEnabled: false,
+});
+const config = require('../serverlessConfig.js');
 
 module.exports = (event, callback) => {
-  const data = JSON.parse(event.body);
-
-  data.id = event.pathParameters.id;
-  data.updatedAt = new Date().getTime();
-
-  const params = {
-    TableName : 'todos',
-    Item: data
-  };
-
-  return dynamoDb.put(params, (error, data) => {
-    if (error) {
-      callback(error);
-    }
-    callback(error, params.Item);
-  });
+  S3.upload({
+    Bucket: config.custom.folderName,
+    Key: event.pathParameters.id,
+    Body: event.body
+  }, (err, res) => {
+    console.log(err, res);
+    callback(err, res);
+  })
 };
