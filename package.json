@@ -4,6 +4,7 @@
   "description": "Serverless CRUD service",
   "scripts": {
     "server:examples": "open 'http://localhost:8080/examples/contact-form/' && python -m SimpleHTTPServer 8080",
+    "server:serverless": "serverless offline",
     "server:s3": "./node_modules/s3rver/bin/s3rver.js -d ./data",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

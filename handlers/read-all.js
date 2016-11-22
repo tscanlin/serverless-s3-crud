@@ -13,7 +13,29 @@ module.exports = (event, callback) => {
     Bucket: config.custom.folderName,
   }, (err, res) => {
     console.log(err, res);
-    callback(err, res);
+    if (res.Contents) {
+      const length = res.Contents.length
+      let successCount = 0
+      res.FileContents = {}
+      res.Contents.forEach((item) => {
+        console.log(item);
+        console.log(length);
+        const key = item.Key
+        S3.getObject({
+          Bucket: config.custom.folderName,
+          Key: key,
+        }, (err, data) => {
+          successCount++
+          data.body = data.Body.toString()
+          res.FileContents[key] = data
+          if (successCount === length) {
+            callback(err, res);
+          }
+        })
+      })
+    } else {
+      callback(err, res);
+    }
   })
 
   // const params = {

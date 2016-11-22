@@ -5,6 +5,7 @@ plugins:
 
 custom:
   folderName: formResponse
+  jsonKey: timestamp
 
 provider:
   name: aws

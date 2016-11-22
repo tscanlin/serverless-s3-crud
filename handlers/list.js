@@ -6,16 +6,13 @@ const S3 = new AWS.S3({
   s3ForcePathStyle: true,
   sslEnabled: false,
 });
-const uuid = require('uuid');
 const config = require('../serverlessConfig.js');
 
 module.exports = (event, callback) => {
-  // S3.upload({
-  //   Bucket: config.custom.folderName,
-  //   Key: uuid.v4(),
-  //   Body: event.body
-  // }, (err, res) => {
-  //   console.log(err, res);
-  //   callback(err, res);
-  // })
+  S3.listObjectsV2({
+    Bucket: config.custom.folderName,
+  }, (err, res) => {
+    console.log(err, res);
+    callback(err, res);
+  })
 };

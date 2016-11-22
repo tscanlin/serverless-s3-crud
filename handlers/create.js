@@ -12,7 +12,9 @@ const config = require('../serverlessConfig.js');
 module.exports = (event, callback) => {
   S3.upload({
     Bucket: config.custom.folderName,
-    Key: uuid.v4(),
+    Key: config.custom.jsonKey === 'uuid'
+      ? uuid.v4()
+      : new Date().getTime().toString(),
     Body: event.body
   }, (err, res) => {
     console.log(err, res);
