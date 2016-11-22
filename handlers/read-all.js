@@ -12,23 +12,20 @@ module.exports = (event, callback) => {
   S3.listObjectsV2({
     Bucket: config.custom.folderName,
   }, (err, res) => {
-    console.log(err, res);
     if (res.Contents) {
       const length = res.Contents.length
-      let successCount = 0
+      let count = 0
       res.FileContents = {}
       res.Contents.forEach((item) => {
-        console.log(item);
-        console.log(length);
         const key = item.Key
         S3.getObject({
           Bucket: config.custom.folderName,
           Key: key,
         }, (err, data) => {
-          successCount++
+          count++
           data.body = data.Body.toString()
           res.FileContents[key] = data
-          if (successCount === length) {
+          if (count === length) {
             callback(err, res);
           }
         })
