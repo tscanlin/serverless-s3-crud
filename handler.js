@@ -38,8 +38,6 @@ exports.list = (event, context, callback) => {
 
 exports.readAll = (event, context, callback) => {
   ReadAll(event, (error, result) => {
-    // result.context = context;
-    // result.event = event;
     const response = {
       statusCode: 200,
       headers: {
