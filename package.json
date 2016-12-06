@@ -1,23 +1,24 @@
 {
-  "name": "serverless-crud",
+  "name": "serverless-s3-crud",
   "version": "0.1.0",
-  "description": "Serverless CRUD service",
+  "description": "Serverless CRUD service using S3",
   "scripts": {
-    "server:examples": "open 'http://localhost:8080/examples/contact-form/' && python -m SimpleHTTPServer 8080",
+    "server1:open": "open 'http://localhost:8080/examples/contact-form/'",
+    "server:examples": "python -m SimpleHTTPServer 8080",
     "server:serverless": "serverless offline",
-    "server:s3": "./node_modules/s3rver/bin/s3rver.js -d ./data",
+    "server:s3": "node ./node_modules/s3rver/bin/s3rver.js -d ./data",
     "servers": "npm-run-all --parallel server:*",
+    "start": "npm run servers",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.6.7",
+    "js-yaml": "^3.7.0",
     "uuid": "^2.0.3"
   },
   "devDependencies": {
-    "ajv": "^4.9.0",
-    "js-yaml": "^3.7.0",
     "npm-run-all": "^3.1.1",
     "s3rver": "^1.0.2",
     "serverless-offline": "^3.3.2"
