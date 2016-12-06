@@ -29,7 +29,7 @@ functions:
     handler: handler.create
     events:
       - http:
-          path: ${self:custom.folderName}/{id}
+          path: ${self:custom.folderName}/{id*}
           method: post
           cors: true
   list:
@@ -50,21 +50,21 @@ functions:
     handler: handler.readOne
     events:
       - http:
-          path: ${self:custom.folderName}/{id}
+          path: ${self:custom.folderName}/{id*}
           method: get
           cors: true
   update:
     handler: handler.update
     events:
       - http:
-          path: ${self:custom.folderName}/{id}
+          path: ${self:custom.folderName}/{id*}
           method: put
           cors: true
   delete:
     handler: handler.delete
     events:
       - http:
-          path: ${self:custom.folderName}/{id}
+          path: ${self:custom.folderName}/{id*}
           method: delete
           cors: true
 
