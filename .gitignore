@@ -16,4 +16,4 @@ node_modules
 admin.env
 .env
 tmp
-/data
+/data/form-response/*

@@ -4,7 +4,7 @@ plugins:
   - serverless-offline
 
 custom:
-  folderName: formResponse
+  folderName: form-response
 
 provider:
   name: aws
@@ -29,7 +29,7 @@ functions:
     handler: handler.create
     events:
       - http:
-          path: ${self:custom.folderName}
+          path: ${self:custom.folderName}/{id}
           method: post
           cors: true
   list:
