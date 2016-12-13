@@ -5,9 +5,6 @@ fs   = require('fs')
 var doc
 try {
   doc = yaml.safeLoad(fs.readFileSync('./serverless.yml', 'utf8'))
-  console.log(doc)
-} catch (e) {
-  console.log(e)
-}
+} catch (e) {}
 
 module.exports = doc

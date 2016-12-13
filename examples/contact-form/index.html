@@ -9,6 +9,7 @@
       <input type="text" name="lastName" />
       <input type="password" name="password" />
       <input type="number" name="number" />
+      <input type="file" name="file" />
       <input type="date" name="date" />
       <input type="email" name="email" />
       <input type="color" name="color" />
@@ -25,8 +26,9 @@
     </form>
 
     <script>
-      // This could be used anywhere. Accepts {form}
-      function getInputValues() {
+      // Get input values from a form.
+      // {@param} form
+      function getInputValues(form) {
         var inputData = {}
         Array.prototype.forEach.call(form.querySelectorAll('[name]'), function(el) {
           var key = el.name
@@ -37,6 +39,8 @@
             inputData[key] = el.value
           } else if (el.type === 'checkbox') {
             inputData[key] = el.checked
+          } else if (el.type === 'file') {
+            inputData[key] = el.files.length > 1 ? el.files : el.files[0]
           } else if (el.type !== 'radio') {
             inputData[key] = el.value
           }
@@ -61,7 +65,7 @@
         var id = new Date().getTime()
         fetch('http://localhost:3000/form-response/prefix/' + id, {
             method: 'POST',
-            body: JSON.stringify(data)
+            body: formData // JSON.stringify(data)
           })
           .then(function(res) {
             return res.json()

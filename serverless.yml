@@ -1,4 +1,4 @@
-service: serverless-crud
+service: serverless-crud-s3
 
 plugins:
   - serverless-offline
@@ -73,7 +73,7 @@ resources:
     MyBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: new-bucket
+        BucketName: form-response
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html

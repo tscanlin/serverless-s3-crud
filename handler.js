@@ -7,87 +7,54 @@ const ReadOne = require('./handlers/read-one.js')
 const Update = require('./handlers/update.js')
 const Delete = require('./handlers/delete.js')
 
-exports.create = (event, context, callback) => {
-  console.log(event)
-  Create(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
+function makeResponse(result) {
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin" : "*"
+    },
+    body: JSON.stringify(result),
+  }
+}
 
+exports.create = (event, context, callback) => {
+  Create(event, (error, result) => {
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
 
 exports.list = (event, context, callback) => {
   List(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
-
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
 
 exports.readAll = (event, context, callback) => {
   ReadAll(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
-
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
 
 exports.readOne = (event, context, callback) => {
   ReadOne(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
-
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
 
 exports.update = (event, context, callback) => {
   Update(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
-
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
 
 exports.delete = (event, context, callback) => {
   Delete(event, (error, result) => {
-    const response = {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin" : "*"
-      },
-      body: JSON.stringify(result),
-    }
-
+    const response = makeResponse(result)
     context.succeed(response)
   })
 }
