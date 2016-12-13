@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Serverless CRUD service using S3",
   "scripts": {
-    "server1:open": "open 'http://localhost:8080/examples/contact-form/'",
+    "server-mac:open": "open 'http://localhost:8080/examples/contact-form/'",
     "server:examples": "python -m SimpleHTTPServer 8080",
     "server:serverless": "serverless offline",
     "server:s3": "node ./node_modules/s3rver/bin/s3rver.js -d ./data",
