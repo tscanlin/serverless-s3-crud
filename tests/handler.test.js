@@ -52,7 +52,6 @@ lab.describe('GET request', function() {
       }).then(function(res) {
         return res.json()
       }).then(function(data) {
-        console.log(data);
         expect(data).to.be.null()
         done()
       })
@@ -69,10 +68,8 @@ lab.describe('GET request', function() {
           method: 'GET'
         })
       }).then(function(res) {
-        console.log(res);
         return res.json()
       }).then(function(data) {
-        console.log(data);
         expect(data.ETag).to.be.a.string()
         expect(data.LastModified).to.be.a.string()
         expect(data.ContentLength).to.be.a.string()
@@ -97,7 +94,6 @@ lab.describe('POST request', function() {
       }).then(function(res) {
         return res.json()
       }).then(function(data) {
-        console.log(data)
         expect(data.ETag).to.be.a.string()
         expect(data.Location).to.contain(bucket + '/' + prefix + TEST_KEY)
         expect(data.key).to.equal(prefix + TEST_KEY)
@@ -115,7 +111,6 @@ lab.describe('POST request', function() {
         // expect(res.status).to.equal(200)
         return res.json()
       }).then(function(data) {
-        console.log(data)
         expect(data.message).to.contain('Internal server error')
         // expect(data.errorMessage).to.contain('Uncaught error')
         done()
@@ -163,14 +158,8 @@ lab.describe('DELETE request', function() {
         method: 'POST',
         body: JSON.stringify(TEST_DATA)
       }).then(function(res) {
-        console.log(res);
-        return new Promise(function(resolve) {
-          setTimeout(() => {
-            resolve(res.json())
-          }, 500) // throttling so test doesn't fail on aws.
-        })
+        return res.json()
       }).then(function(data) {
-        console.log(data);
         expect(data.ETag).to.be.a.string()
         expect(data.Location).to.contain(bucket + '/' + prefix + TEST_KEY)
         expect(data.key).to.equal(prefix + TEST_KEY)
