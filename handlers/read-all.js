@@ -2,11 +2,10 @@
 
 const AWS = require('aws-sdk')
 const S3 = new AWS.S3(require('../s3config.js')())
-const serverlessConfig = require('../serverlessConfig.js')
 
 module.exports = (event, callback) => {
   S3.listObjectsV2({
-    Bucket: serverlessConfig.custom.folderName,
+    Bucket: 'form-response',
   }, (err, res) => {
     if (res.Contents) {
       const length = res.Contents.length
@@ -15,7 +14,7 @@ module.exports = (event, callback) => {
       res.Contents.forEach((item) => {
         const key = item.Key
         S3.getObject({
-          Bucket: serverlessConfig.custom.folderName,
+          Bucket: 'form-response',
           Key: key,
         }, (err, data) => {
           count++

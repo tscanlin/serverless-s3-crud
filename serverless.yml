@@ -3,15 +3,6 @@ service: serverless-crud-s3
 plugins:
   - serverless-offline
 
-custom:
-  folderName: form-response
-
-package:
-  exclude:
-    - node_modules/**
-    - '!node_modules/aws-sdk/**'
-    - '!node_modules/js-yaml/**'
-
 provider:
   name: aws
   runtime: nodejs4.3
@@ -22,13 +13,13 @@ provider:
     - Effect: Allow
       Action:
         - s3:ListBucket
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+      Resource: "arn:aws:s3:::form-response"
     - Effect: Allow
       Action:
         - s3:PutObject
         - s3:GetObject
         - s3:DeleteObject
-      Resource: "arn:aws:dynamodb:us-east-1:*:*/*"
+      Resource: "arn:aws:s3:::form-response/*"
 
 functions:
   create:
