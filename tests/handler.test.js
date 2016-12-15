@@ -16,7 +16,7 @@ const apiEndpoint = IS_PROD
   ? 'https://' + host + '/dev/form-response/'
   : 'http://localhost:3000/form-response/'
 const bucket = 'form-response'
-const TEST_KEY = 'test-data'
+const TEST_KEY = 'data-key'
 const TEST_DATA = {
   this: 'is',
   a: 'test',
@@ -26,35 +26,23 @@ const TEST_DATA = {
 const ACCESS_KEY = process.env['AWS_ACCESS_KEY_ID']
 const SECRET_KEY = process.env['AWS_SECRET_ACCESS_KEY']
 
-
-// GET AWS KEYS SETUP
-
-const opts = {
-  host: host,
-  service: 'execute-api',
-  region: 'us-east-1',
-  path: '/dev/form-response/a'
-}
-aws4.sign(opts)
-console.log(opts);
 const headers = {
   "Access-Control-Allow-Origin" : "*",
-  // Authorization: Authorization
-  // access_key: process.env.AWS_ACCESS_KEY_ID,
-  // secret_key: process.env.AWS_SECRET_ACCESS_KEY
 }
 
 
 // RUN TESTS
-
-lab.beforeEach(function(done) {
+function cleanup(done) {
   fetch(apiEndpoint + prefix + TEST_KEY, {
     headers: headers,
     method: 'DELETE'
   }).then(function(d) {
     done()
   })
-})
+}
+
+lab.beforeEach(cleanup)
+lab.after(cleanup)
 
 lab.describe('GET request', function() {
   lab.test('returns null if an object does not exist', (done) => {
@@ -64,10 +52,9 @@ lab.describe('GET request', function() {
       }).then(function(res) {
         return res.json()
       }).then(function(data) {
+        console.log(data);
         expect(data).to.be.null()
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 
@@ -82,8 +69,10 @@ lab.describe('GET request', function() {
           method: 'GET'
         })
       }).then(function(res) {
+        console.log(res);
         return res.json()
       }).then(function(data) {
+        console.log(data);
         expect(data.ETag).to.be.a.string()
         expect(data.LastModified).to.be.a.string()
         expect(data.ContentLength).to.be.a.string()
@@ -95,8 +84,6 @@ lab.describe('GET request', function() {
         const obj = JSON.parse(body)
         expect(obj).to.equal(TEST_DATA)
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 })
@@ -117,8 +104,6 @@ lab.describe('POST request', function() {
         expect(data.Key).to.equal(prefix + TEST_KEY)
         expect(data.Bucket).to.equal(bucket)
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 
@@ -127,15 +112,13 @@ lab.describe('POST request', function() {
         headers: headers,
         method: 'POST'
       }).then(function(res) {
-        console.log(res)
-        expect(res.status).to.equal(200)
+        // expect(res.status).to.equal(200)
         return res.json()
       }).then(function(data) {
         console.log(data)
-        expect(data.errorMessage).to.contain('Uncaught error')
+        expect(data.message).to.contain('Internal server error')
+        // expect(data.errorMessage).to.contain('Uncaught error')
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 })
@@ -156,8 +139,6 @@ lab.describe('PUT request', function() {
         expect(data.Key).to.equal(prefix + TEST_KEY + postfix)
         expect(data.Bucket).to.equal(bucket)
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 
@@ -168,10 +149,9 @@ lab.describe('PUT request', function() {
       }).then(function(res) {
         return res.json()
       }).then(function(data) {
-        expect(data.errorMessage).to.contain('Uncaught error')
+        expect(data.message).to.contain('Internal server error')
+        // expect(data.errorMessage).to.contain('Uncaught error')
         done()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 })
@@ -183,8 +163,14 @@ lab.describe('DELETE request', function() {
         method: 'POST',
         body: JSON.stringify(TEST_DATA)
       }).then(function(res) {
-        return res.json()
+        console.log(res);
+        return new Promise(function(resolve) {
+          setTimeout(() => {
+            resolve(res.json())
+          }, 500) // throttling so test doesn't fail on aws.
+        })
       }).then(function(data) {
+        console.log(data);
         expect(data.ETag).to.be.a.string()
         expect(data.Location).to.contain(bucket + '/' + prefix + TEST_KEY)
         expect(data.key).to.equal(prefix + TEST_KEY)
@@ -205,21 +191,17 @@ lab.describe('DELETE request', function() {
       }).then(function(data) {
         expect(data).to.be.null()
         done()
-      }).catch(function(e) {
-        console.log(e)
-      })
+      }).catch((e) => console.log(e))
   })
 
   lab.test('returns a 200 even if the object does not exist', (done) => {
-    fetch(apiEndpoint + prefix + 'foo/bar', {
+    fetch(apiEndpoint + prefix + 'foo1', {
         headers: headers,
         method: 'DELETE'
       }).then(function(res) {
         expect(res.status).to.equal(200)
         done()
         return res.json()
-      }).catch(function(e) {
-        console.log(e)
       })
   })
 })

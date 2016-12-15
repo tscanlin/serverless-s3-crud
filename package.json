@@ -10,7 +10,7 @@
     "servers": "npm-run-all --parallel server:*",
     "deploy": "serverless deploy",
     "start": "npm run servers",
-    "test": "lab -c -v -l tests/handler.test.js"
+    "test": "lab -v -l tests/handler.test.js"
   },
   "author": "",
   "license": "MIT",
