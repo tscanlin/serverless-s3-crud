@@ -30,10 +30,16 @@ curl -X POST https://XXXX.execute-api.region.amazonaws.com/dev/todos --data '{ "
 curl https://XXXX.execute-api.region.amazonaws.com/dev/todos
 ```
 
-### Read
+### ReadOne
 
 ```bash
 curl https://XXXX.execute-api.region.amazonaws.com/dev/todos/<id>
+```
+
+### ReadAll
+
+```bash
+curl https://XXXX.execute-api.region.amazonaws.com/dev/todos/readAll
 ```
 
 ### Update
@@ -42,7 +48,7 @@ curl https://XXXX.execute-api.region.amazonaws.com/dev/todos/<id>
 curl -X PUT https://XXXX.execute-api.region.amazonaws.com/dev/todos/<id> --data '{ "body" : "Understand Serverless" }'
 ```
 
-### DELETE
+### Delete
 
 ```bash
 curl -X DELETE https://XXXX.execute-api.region.amazonaws.com/dev/todos/<id>

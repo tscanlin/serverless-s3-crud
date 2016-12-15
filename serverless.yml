@@ -6,6 +6,12 @@ plugins:
 custom:
   folderName: form-response
 
+package:
+  exclude:
+    - node_modules/**
+    - '!node_modules/aws-sdk/**'
+    - '!node_modules/js-yaml/**'
+
 provider:
   name: aws
   runtime: nodejs4.3
@@ -22,49 +28,49 @@ provider:
         - s3:PutObject
         - s3:GetObject
         - s3:DeleteObject
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+      Resource: "arn:aws:dynamodb:us-east-1:*:*/*"
 
 functions:
   create:
     handler: handler.create
     events:
       - http:
-          path: ${self:custom.folderName}/{id*}
+          path: form-response/{id}
           method: post
           cors: true
   list:
     handler: handler.list
     events:
       - http:
-          path: ${self:custom.folderName}
+          path: form-response
           method: get
           cors: true
   readAll:
     handler: handler.readAll
     events:
       - http:
-          path: ${self:custom.folderName}/readAll
+          path: form-response/readAll
           method: get
           cors: true
   readOne:
     handler: handler.readOne
     events:
       - http:
-          path: ${self:custom.folderName}/{id*}
+          path: form-response/{id}
           method: get
           cors: true
   update:
     handler: handler.update
     events:
       - http:
-          path: ${self:custom.folderName}/{id*}
+          path: form-response/{id}
           method: put
           cors: true
   delete:
     handler: handler.delete
     events:
       - http:
-          path: ${self:custom.folderName}/{id*}
+          path: form-response/{id}
           method: delete
           cors: true
 
@@ -74,7 +80,7 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: form-response
-        AccessControl: PublicRead
+        AccessControl: PublicReadWrite
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: error.html

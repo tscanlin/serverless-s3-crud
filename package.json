@@ -8,6 +8,7 @@
     "server:serverless": "serverless offline",
     "server:s3": "node ./node_modules/s3rver/bin/s3rver.js -d ./data",
     "servers": "npm-run-all --parallel server:*",
+    "deploy": "serverless deploy",
     "start": "npm run servers",
     "test": "lab -c -v -l tests/handler.test.js"
   },
@@ -18,6 +19,7 @@
     "js-yaml": "^3.7.0"
   },
   "devDependencies": {
+    "aws4": "^1.5.0",
     "code": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "lab": "^11.2.1",
