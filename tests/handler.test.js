@@ -1,9 +1,8 @@
 const Code = require('code')
 const expect = Code.expect
 const Lab = require('lab')
-const fetch = require('isomorphic-fetch')
-const aws4 = require('aws4')
 const lab = exports.lab = Lab.script()
+const fetch = require('isomorphic-fetch')
 // const handler = require('../handler')
 
 

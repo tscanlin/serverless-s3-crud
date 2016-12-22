@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Serverless CRUD service using S3",
   "scripts": {
-    "server-mac:open": "open 'http://localhost:8080/examples/contact-form/'",
+    "server:open:mac": "open 'http://localhost:8080/examples/contact-form/'",
+    "server:open:pc": "start 'http://localhost:8080/examples/contact-form/'",
     "server:examples": "python -m SimpleHTTPServer 8080",
     "server:serverless": "serverless offline",
     "server:s3": "node ./node_modules/s3rver/bin/s3rver.js -d ./data",
@@ -19,7 +20,6 @@
     "js-yaml": "^3.7.0"
   },
   "devDependencies": {
-    "aws4": "^1.5.0",
     "code": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "lab": "^11.2.1",

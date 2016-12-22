@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Serverless S3 CRUD</title>
   </head>
   <body>
     <form id="simple-form">
@@ -63,9 +63,9 @@
         console.log(d)
 
         var id = new Date().getTime()
-        fetch('http://localhost:3000/form-response/prefix/' + id, {
+        fetch('http://localhost:3000/form-response/' + id, {
             method: 'POST',
-            body: formData // JSON.stringify(data)
+            body: formData
           })
           .then(function(res) {
             return res.json()
