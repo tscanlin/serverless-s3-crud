@@ -58,3 +58,4 @@ curl -X DELETE https://XXXX.execute-api.region.amazonaws.com/dev/form-response/<
 
 - Lambda
 - API Gateway
+- S3
