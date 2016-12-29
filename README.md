@@ -1,6 +1,6 @@
 # Serverless CRUD with S3
 
-Serverless service which provides a basic CRUD service using S3.
+[Serverless](https://serverless.com/) service which provides a basic CRUD service using S3.
 
 ## Installation
 
