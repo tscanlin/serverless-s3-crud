@@ -1,6 +1,6 @@
 {
   "name": "serverless-s3-crud",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Serverless CRUD service using S3",
   "scripts": {
     "server:open:mac": "open 'http://localhost:8080/examples/contact-form/'",
@@ -16,15 +16,15 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.6.7",
-    "js-yaml": "^3.7.0"
+    "aws-sdk": "^2.668.0",
+    "js-yaml": "^3.13.1"
   },
   "devDependencies": {
-    "code": "^4.0.0",
+    "code": "^5.2.4",
     "isomorphic-fetch": "^2.2.1",
-    "lab": "^11.2.1",
-    "npm-run-all": "^3.1.1",
-    "s3rver": "^1.0.2",
-    "serverless-offline": "^3.3.2"
+    "lab": "^18.0.2",
+    "npm-run-all": "^4.1.5",
+    "s3rver": "^3.5.0",
+    "serverless-offline": "^6.1.4"
   }
 }
